@@ -16,6 +16,13 @@ const catImages = [
 // --- 削除確認 ---
 let deleteTargetId = null;
 
+// --- ページ読み込み時に日付フィールドに今日を設定 ---
+window.addEventListener("DOMContentLoaded", () => {
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("taskDueDate").value = today;
+});
+
+
 // --- イベントリスナー ---
 taskForm.addEventListener("submit", addTask);
 statusFilter.addEventListener("change", renderTasks);
@@ -42,6 +49,7 @@ function addTask(e) {
   tasks.push(task);
   saveTasks(tasks);
   taskForm.reset();
+  document.getElementById("taskDueDate").value = new Date().toISOString().split("T")[0];
   renderTasks();
 }
 
