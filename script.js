@@ -13,15 +13,23 @@ const catImages = [
   "assets/cats/cat5.jpg"
 ];
 
+// --- 日付をローカルタイムで取得 ---
+function getTodayString() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+
 // --- 削除確認 ---
 let deleteTargetId = null;
 
 // --- ページ読み込み時に日付フィールドに今日を設定 ---
 window.addEventListener("DOMContentLoaded", () => {
-  const today = new Date().toISOString().split("T")[0];
-  document.getElementById("taskDueDate").value = today;
+  document.getElementById("taskDueDate").value = getTodayString();
 });
-
 
 // --- イベントリスナー ---
 taskForm.addEventListener("submit", addTask);
@@ -49,7 +57,7 @@ function addTask(e) {
   tasks.push(task);
   saveTasks(tasks);
   taskForm.reset();
-  document.getElementById("taskDueDate").value = new Date().toISOString().split("T")[0];
+  document.getElementById("taskDueDate").value = getTodayString();
   renderTasks();
 }
 
