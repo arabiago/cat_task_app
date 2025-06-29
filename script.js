@@ -13,6 +13,9 @@ const catImages = [
   "assets/cats/cat5.jpg"
 ];
 
+// --- 削除確認 ---
+let deleteTargetId = null;
+
 // --- イベントリスナー ---
 taskForm.addEventListener("submit", addTask);
 statusFilter.addEventListener("change", renderTasks);
@@ -78,10 +81,32 @@ function renderTasks() {
     checkbox.className = "form-check-input me-2";
     checkbox.addEventListener("change", () => toggleComplete(task.id));
 
-    // 内容表示
+    // --- 種類に応じてタグクラスを決定 ---
+    let tagClass = "";
+    switch (task.type) {
+      case "仕事":
+        tagClass = "tag-work";
+        break;
+      case "家事":
+        tagClass = "tag-home";
+        break;
+      case "資格勉強":
+        tagClass = "tag-study";
+        break;
+      default:
+        tagClass = "tag-other";
+    }
+
+    // --- 内容表示をタグ付きで表示 ---
     const info = document.createElement("div");
     info.className = "flex-grow-1";
-    info.innerHTML = `<strong>${task.name}</strong><br><small>${task.dueDate}（${task.type}）</small>`;
+    info.innerHTML = `
+      <strong>${task.name}</strong><br>
+      <small>${task.dueDate}</small>
+      <span class="task-tag ${tagClass} ms-2">${task.type}</span>
+    `;
+
+
 
     // 状態に応じた見た目
     if (task.completed) {
@@ -141,27 +166,72 @@ function editTask(id) {
   const tasks = getTasks();
   const task = tasks.find(t => t.id === id);
 
-  const name = prompt("タスク名を編集", task.name);
-  const dueDate = prompt("〆切日を編集 (YYYY-MM-DD)", task.dueDate);
-  const type = prompt("種類を編集（仕事/家事/資格勉強/その他）", task.type);
+  // フォームに既存値をセット
+  document.getElementById("editTaskId").value = task.id;
+  document.getElementById("editName").value = task.name;
+  document.getElementById("editDueDate").value = task.dueDate;
+  document.getElementById("editType").value = task.type;
+
+  // モーダル表示
+  const editModal = new bootstrap.Modal(document.getElementById("editModal"));
+  editModal.show();
+}
+
+document.getElementById("saveEditBtn").addEventListener("click", () => {
+  const id = Number(document.getElementById("editTaskId").value);
+  const name = document.getElementById("editName").value.trim();
+  const dueDate = document.getElementById("editDueDate").value;
+  const type = document.getElementById("editType").value;
 
   if (!name || !dueDate || !type) return;
 
+  const tasks = getTasks();
+  const task = tasks.find(t => t.id === id);
   task.name = name;
   task.dueDate = dueDate;
   task.type = type;
+
   saveTasks(tasks);
   renderTasks();
-}
+
+  // モーダル閉じる
+  const modalEl = document.getElementById("editModal");
+  const modalInstance = bootstrap.Modal.getInstance(modalEl);
+  modalInstance.hide();
+});
+
+
 
 // --- 削除確認 ---
 function confirmDelete(id) {
-  if (confirm("本当に消すんだニャ？")) {
-    const tasks = getTasks().filter(t => t.id !== id);
+  deleteTargetId = id;
+
+  // 固定画像と固定メッセージ
+  document.getElementById("deleteCatImage").src = "assets/cats/delete_cat.jpg";
+  document.getElementById("deleteMessage").textContent = "本当に消すんだニャ？";
+
+  // モーダル表示
+  const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+  deleteModal.show();
+}
+
+// --- 削除ボタンのイベントリスナー ---
+document.getElementById("confirmDeleteBtn").addEventListener("click", () => {
+  if (deleteTargetId !== null) {
+    const tasks = getTasks().filter(t => t.id !== deleteTargetId);
     saveTasks(tasks);
     renderTasks();
+
+    // モーダル閉じる
+    const modalEl = document.getElementById("deleteModal");
+    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+    modalInstance.hide();
+
+    // 初期化
+    deleteTargetId = null;
   }
-}
+});
+
 
 // 初期表示
 renderTasks();

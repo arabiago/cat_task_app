@@ -34,3 +34,39 @@
   max-height: 200px;
   object-fit: contain;
 }
+
+/* 削除画像サイズ調整 */
+#deleteCatImage {
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* カテゴリのタグ風表示 */
+.task-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+}
+
+.tag-work {
+  background-color: #4FC3F7; /* 水色 */
+}
+
+.tag-home {
+  background-color: #F48FB1; /* ピンク */
+}
+
+.tag-study {
+  background-color: #AED581; /* 黄緑 */
+}
+
+.tag-other {
+  background-color: #B0BEC5; /* グレー */
+}

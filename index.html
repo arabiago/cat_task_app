@@ -72,7 +72,60 @@
     </div>
   </div>
 
+  <!-- 編集用モーダル -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">タスクを編集</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editForm">
+          <input type="hidden" id="editTaskId">
+          <div class="mb-3">
+            <label for="editName" class="form-label">タスク名</label>
+            <input type="text" class="form-control" id="editName" required>
+          </div>
+          <div class="mb-3">
+            <label for="editDueDate" class="form-label">〆切日</label>
+            <input type="date" class="form-control" id="editDueDate" required>
+          </div>
+          <div class="mb-3">
+            <label for="editType" class="form-label">種類</label>
+            <select class="form-select" id="editType" required>
+              <option value="仕事">仕事</option>
+              <option value="家事">家事</option>
+              <option value="資格勉強">資格勉強</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+        <button type="button" class="btn btn-custom" id="saveEditBtn">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 削除確認モーダル -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+      <img id="deleteCatImage" src="" alt="猫" class="img-fluid mb-2 rounded">
+      <h5 id="deleteMessage" class="text-muted mb-3">本当に消すんだニャ？</h5>
+      <div class="d-flex justify-content-center gap-3">
+        <button class="btn btn-danger" id="confirmDeleteBtn">削除するニャ</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">やめるニャ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="script.js"></script>
+
 </body>
 </html>
