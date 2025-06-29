@@ -1,0 +1,36 @@
+/* 全体の色調：パステル系 */
+
+/* ボタン統一色（パステルグリーン） */
+.btn-custom {
+  background-color: #A8E6CF;
+  color: #333;
+  border: none;
+}
+.btn-custom:hover {
+  background-color: #81D4B0;
+  color: #000;
+}
+
+/* アプリタイトル色 */
+.text-navy {
+  color: #5D576B;
+}
+
+/* 完了済みタスク */
+.task-completed {
+  text-decoration: line-through;
+  background-color: #f5f5f5;
+  color: #888;
+}
+
+/* 期限切れタスク */
+.task-overdue {
+  color: #d9534f; /* Bootstrapのdanger赤 */
+  font-weight: bold;
+}
+
+/* モーダル画像サイズ調整 */
+#catImage {
+  max-height: 200px;
+  object-fit: contain;
+}
